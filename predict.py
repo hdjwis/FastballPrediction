@@ -3,24 +3,23 @@ import pickle
 import pandas as pd
 
 
-with open("model.pkl", 'rb') as file:
+with open("pkl/model.pkl", 'rb') as file:
     model = pickle.load(file)
 
 st.title("Prediction")
 st.subheader("Enter a value for each spot")
 
-balls = st.text_input("# of balls")
-strike = st.text_input('# of strikes')
-runner_on_1b = st.text_input('Is there a runner on 1st?(yes/no)')
-runner_on_2b = st.text_input('Is there a runner on 2nd?(yes/no)')
-runner_on_3b = st.text_input('Is there a runner on 3rd?(yes/no)')
-outs = st.text_input('How many outs when the batter is up?')
+balls = st.selectbox("# of balls", (0, 1, 2, 3))
+strike = st.selectbox('# of strikes', (0, 1, 2))
+runner_on_1b = st.selectbox('Is there a runner on 1st?', ('Yes', 'No'))
+runner_on_2b = st.selectbox('Is there a runner on 2nd?', ('Yes', 'No'))
+runner_on_3b = st.selectbox('Is there a runner on 3rd?', ('Yes', 'No'))
+outs = st.selectbox('How many outs when the batter is up?', (0, 1, 2))
 inning = st.text_input('What is the inning?')
 n_thruorder = st.text_input('What time through the order is it for the pitcher?')
 fastball_percentage = st.text_input('What percent of the time does the pitcher throw a fastball?')
 
-if st.button('Predict') and balls and strike and runner_on_1b and runner_on_2b and runner_on_3b and outs and inning and n_thruorder and fastball_percentage:         
-    
+if st.button('Predict') and inning and n_thruorder and fastball_percentage:         
     data =  pd.DataFrame(
             {
                         'balls' : [balls], 
