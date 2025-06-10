@@ -6,8 +6,8 @@ import pandas as pd
 with open("model.pkl", 'rb') as file:
     model = pickle.load(file)
 
-
-
+st.title("Prediction")
+st.subheader("Enter a value for each spot")
 
 balls = st.text_input("# of balls")
 strike = st.text_input('# of strikes')
@@ -31,11 +31,9 @@ if st.button('Predict') and balls and strike and runner_on_1b and runner_on_2b a
                         'outs_when_up' : [outs], 
                         'inning' : [inning], 
                         'n_thruorder_pitcher' : [n_thruorder], 
-                        'fastball_percentage' : [fastball_percentage]
+                        'fastball_percentage' : [float(fastball_percentage)/100.0]
             }
             )
     pred = model.predict(data)
-    prob = model.predict_proba(data)
     pred = 'Fastball' if pred == 1 else 'Offspeed/Breaking' 
     st.write('Prediction: ' + pred)
-    st.write('Probability: ' + str(prob))
